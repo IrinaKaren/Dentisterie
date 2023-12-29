@@ -14,6 +14,7 @@ public class Prioriter {
     private int numero;
     private double cout_traitement;
     private double cout_remplacement;
+    private double cout;
     private int id_priorite;
     private int id_situation;
     private String degat;
@@ -117,33 +118,40 @@ public class Prioriter {
         this.idclient = idclient;
     }
     
+    public double getCout() {
+        return cout;
+    }
+
+    public void setCout(double cout) {
+        this.cout = cout;
+    }
+    
     //function
     public static List<Prioriter> sanitaire(int idclient) throws Exception {
         List<Prioriter> dents = new ArrayList<>();
 
         try (Connection connection = PGSQLConnection.getConnection()) {
             String sql = "SELECT id_client, client, id_dents, numero, cout_traitement, cout_remplacement, id_priorite, id_situation, degat, type " +
-                    "from v_priorite_sanitaire";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        Prioriter dent = new Prioriter();
-                        dent.setIdclient(resultSet.getInt("id_client"));
-                        dent.setIddents(resultSet.getInt("id_dents"));
-                        dent.setClient(resultSet.getString("client"));
-                        dent.setDegat(resultSet.getString("degat"));
-                        dent.setType(resultSet.getString("type"));
-                        dent.setNumero(resultSet.getInt("numero"));
-                        dent.setCout_remplacement(resultSet.getInt("cout_remplacement"));
-                        dent.setCout_traitement(resultSet.getInt("cout_traitement"));
-                        dent.setId_priorite(resultSet.getInt("id_priorite"));
-                        dent.setId_situation(resultSet.getInt("id_situation"));
-                        dents.add(dent);
-                    }
+                    "from v_priorite_sanitaire WHERE id_client = ?";   
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, idclient);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Prioriter dent = new Prioriter();
+                    dent.setIdclient(resultSet.getInt("id_client"));
+                    dent.setIddents(resultSet.getInt("id_dents"));
+                    dent.setClient(resultSet.getString("client"));
+                    dent.setDegat(resultSet.getString("degat"));
+                    dent.setType(resultSet.getString("type"));
+                    dent.setNumero(resultSet.getInt("numero"));
+                    dent.setCout_remplacement(resultSet.getInt("cout_remplacement"));
+                    dent.setCout_traitement(resultSet.getInt("cout_traitement"));
+                    dent.setId_priorite(resultSet.getInt("id_priorite"));
+                    dent.setId_situation(resultSet.getInt("id_situation"));
+                    dents.add(dent);
                 }
-            }
+            }    
         } catch (Exception e) {
-            // Handle exceptions here if needed
             e.printStackTrace();
         }
 
@@ -155,25 +163,25 @@ public class Prioriter {
 
         try (Connection connection = PGSQLConnection.getConnection()) {
             String sql = "SELECT id_client, client, id_dents, numero, cout_traitement, cout_remplacement, id_priorite, id_situation, degat, type " +
-                    "from v_priorite_beaute";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        Prioriter dent = new Prioriter();
-                        dent.setIdclient(resultSet.getInt("id_client"));
-                        dent.setIddents(resultSet.getInt("id_dents"));
-                        dent.setClient(resultSet.getString("client"));
-                        dent.setDegat(resultSet.getString("degat"));
-                        dent.setType(resultSet.getString("type"));
-                        dent.setNumero(resultSet.getInt("numero"));
-                        dent.setCout_remplacement(resultSet.getInt("cout_remplacement"));
-                        dent.setCout_traitement(resultSet.getInt("cout_traitement"));
-                        dent.setId_priorite(resultSet.getInt("id_priorite"));
-                        dent.setId_situation(resultSet.getInt("id_situation"));
-                        dents.add(dent);
-                    }
+                    "from v_priorite_beaute WHERE id_client = ?";
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, idclient);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Prioriter dent = new Prioriter();
+                    dent.setIdclient(resultSet.getInt("id_client"));
+                    dent.setIddents(resultSet.getInt("id_dents"));
+                    dent.setClient(resultSet.getString("client"));
+                    dent.setDegat(resultSet.getString("degat"));
+                    dent.setType(resultSet.getString("type"));
+                    dent.setNumero(resultSet.getInt("numero"));
+                    dent.setCout_remplacement(resultSet.getInt("cout_remplacement"));
+                    dent.setCout_traitement(resultSet.getInt("cout_traitement"));
+                    dent.setId_priorite(resultSet.getInt("id_priorite"));
+                    dent.setId_situation(resultSet.getInt("id_situation"));
+                    dents.add(dent);
                 }
-            }
+            }    
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -206,21 +214,60 @@ public class Prioriter {
         return dents;
     }
     
+//    public static List<Prioriter> getDentsTraiter(double argent, String option, int idclient) throws Exception {
+//        List<Prioriter> dents = new ArrayList<>();
+//        List<Prioriter> listdents = Prioriter.getPriorite(option, idclient);
+//        double cout = 0;
+//
+//        for (int i = 0; i < listdents.size(); i++) { 
+//            if (cout < argent) {
+//                if (listdents.get(i).getType().equalsIgnoreCase("traitement")) {
+//                    cout += listdents.get(i).getCout_traitement();
+//                    dents.add(listdents.get(i));
+//                }
+//                if (listdents.get(i).getType().equalsIgnoreCase("remplacement")) {
+//                    cout += listdents.get(i).getCout_remplacement();
+//                    dents.add(listdents.get(i));
+//                }
+//            }
+//        }
+//        return dents;
+//    }
+    
     public static List<Prioriter> getDentsTraiter(double argent, String option, int idclient) throws Exception {
         List<Prioriter> dents = new ArrayList<>();
         List<Prioriter> listdents = Prioriter.getPriorite(option, idclient);
         double cout = 0;
 
         for (int i = 0; i < listdents.size(); i++) { 
-            if (cout < argent) {
-                if (listdents.get(i).getType().equalsIgnoreCase("traitement")) {
-                    cout += listdents.get(i).getCout_traitement();
+            if(listdents.get(i).getCout_remplacement() <= argent ) {
+                    cout = listdents.get(i).getCout_remplacement();
+                    listdents.get(i).setType("remplacement");
+                    listdents.get(i).setCout(listdents.get(i).getCout_remplacement());
                     dents.add(listdents.get(i));
+                    argent -= cout;
+            }
+            else if(listdents.get(i).getCout_traitement() <= argent ){
+                cout = listdents.get(i).getCout_traitement();
+                listdents.get(i).setType("traitement");
+                listdents.get(i).setCout(listdents.get(i).getCout_traitement());
+                dents.add(listdents.get(i));
+                argent -= cout;
+            }
+            else{
+                for(int j=i-1 ;j>=0; j--){
+                    if(listdents.get(j).getType().equalsIgnoreCase("remplacement")){
+                        listdents.get(j).setType("traitement");
+                        argent +=  listdents.get(j).getCout() - listdents.get(j).getCout_traitement();
+                        listdents.get(j).setCout(listdents.get(j).getCout_traitement());
+                        if(argent >= listdents.get(i).getCout_traitement()){
+                            break;
+                        }
+                    }
                 }
-                if (listdents.get(i).getType().equalsIgnoreCase("remplacement")) {
-                    cout += listdents.get(i).getCout_remplacement();
-                    dents.add(listdents.get(i));
-                }
+                if(argent < listdents.get(i).getCout_traitement())throw new Exception("Argent insuffisant");
+                i=i-1;
+                continue;
             }
         }
         return dents;

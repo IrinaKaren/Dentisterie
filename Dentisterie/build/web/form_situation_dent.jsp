@@ -91,15 +91,15 @@
         <input type="hidden" name="argent" value="<%=argent%>">
         <div id="added-inputs-container" class="added-inputs">
             <input type="number" name="numero_dent" placeholder="Numéro dent" required>
-            <select id="type" name="degat">
+<!--            <select id="type" name="degat">
                 <option value="remplacement">Abimée</option>
                 <option value="traitement">Cassée</option>
                 <option value="traitement">Cari</option>
-            </select>
-            <select id="type" name="type">
+            </select>-->
+<!--            <select id="type" name="type">
                 <option value="remplacement">Remplacement</option>
                 <option value="traitement">Traitement</option>
-            </select>
+            </select>-->
         </div>
 
         <button type="button" class="add-button" onclick="addInputFields()">+</button>

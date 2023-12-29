@@ -23,15 +23,16 @@ public class FormSituationDentController extends HttpServlet {
         for (int i = 0; i < numeroDents.length; i++) {
             try {
                 String numeroDent = numeroDents[i];
-                String degat = degats[i];
-                String type = types[i];
+//                String degat = degats[i];
+//                String type = types[i];
                 
                 int idClientValue = Integer.parseInt(idclient);
                 int numeroDentValue = Integer.parseInt(numeroDent); 
-                Dents dent = new Dents(numeroDentValue,idClientValue,degat,type);
+//                Dents dent = new Dents(numeroDentValue,idClientValue,degat,type);
+                Dents dent = new Dents(numeroDentValue,idClientValue,null,null);
                 dent.situation();
 
-                response.getWriter().println("Numero Dent: " + numeroDent + ", Type: " + type);
+                response.getWriter().println("Numero Dent: " + numeroDent);
             } catch (Exception ex) {
                 ex.printStackTrace(response.getWriter());
             }

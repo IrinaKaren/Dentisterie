@@ -89,7 +89,7 @@
                         <td></td>
                         <td><%=listdents.get(i).getNumero()%></td>
                         <td><%=listdents.get(i).getType()%></td>
-                        <td><%=listdents.get(i).getCout_traitement()%></td>
+                        <td><%=listdents.get(i).getCout()%></td>
                     </tr>
                 <% } %>
             </tbody>
