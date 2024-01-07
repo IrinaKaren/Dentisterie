@@ -125,7 +125,7 @@ public class Operation {
         return date_max;
     }
     
-    public static List<Operation> getLastOperation(int id_client) throws Exception{
+    public static List<Operation> getLastOperation(int id_client,Timestamp date_now) throws Exception{
         Timestamp date_max = getDateMax();
         List<Operation> dents = new ArrayList();
         Connection connection = PGSQLConnection.getConnection();
@@ -133,7 +133,7 @@ public class Operation {
         try {
             String sql = "SELECT id, date_rdv, id_client, numero_dent, id_etat, type, cout from operation WHERE date_rdv = ? and id_client = ? ";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setTimestamp(1, date_max);
+                preparedStatement.setTimestamp(1, date_now);
                 preparedStatement.setInt(2, id_client);
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
@@ -155,6 +155,15 @@ public class Operation {
             }
         }
         return dents;
+    }
+    
+    public static double getCoutTotal(int id_client,Timestamp date_now) throws Exception{
+        List<Operation> listoperation = getLastOperation(id_client,date_now);
+        double cout_total = 0;
+        for(int i = 0; i<listoperation.size(); i++){
+            cout_total += listoperation.get(i).getCout();
+        }
+        return cout_total;
     }
     
     //--------------- AU CAS OU MISY TRAITEMENT ETC ----------------------------

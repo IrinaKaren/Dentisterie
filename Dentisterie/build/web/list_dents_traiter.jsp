@@ -2,7 +2,10 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-        List<Operation> listdents = (List<Operation>)request.getAttribute("listdents");
+    List<Operation> listdents = (List<Operation>)request.getAttribute("listdents");
+    double cout_total = (double)request.getAttribute("cout_total");
+    double reste = (double)request.getAttribute("reste");
+    double argent = (double)request.getAttribute("argent");
 %>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -98,6 +101,9 @@
                 <% } %>
             </tbody>
         </table>
+        <h2>Budget : <%=argent%></h2>
+        <h2>Cout Total : <%=cout_total%></h2>
+        <h2>Reste : <%=reste%></h2>
     </div>
 </body>
 </html>

@@ -167,10 +167,10 @@ public class Prioriter {
                     dent.setId_priorite(resultSet.getInt("id_priorite"));
                     dent.setIddents(resultSet.getInt("id_dents"));
                     dent.setNumero(resultSet.getInt("numero"));
-                    dent.setCout_nettoyage(resultSet.getInt("cout_nettoyage"));
-                    dent.setCout_reparation(resultSet.getInt("cout_reparation"));
-                    dent.setCout_enlevement(resultSet.getInt("cout_enlevement"));
-                    dent.setCout_remplacement(resultSet.getInt("cout_remplacement"));
+                    dent.setCout_nettoyage(resultSet.getDouble("cout_nettoyage"));
+                    dent.setCout_reparation(resultSet.getDouble("cout_reparation"));
+                    dent.setCout_enlevement(resultSet.getDouble("cout_enlevement"));
+                    dent.setCout_remplacement(resultSet.getDouble("cout_remplacement"));
                     dent.setDate_rdv(resultSet.getTimestamp("date_rdv"));
                     dent.setId_situation(resultSet.getInt("id_situation"));
                     dent.setId_etat(resultSet.getInt("id_etat"));
@@ -201,10 +201,10 @@ public class Prioriter {
                     dent.setId_priorite(resultSet.getInt("id_priorite"));
                     dent.setIddents(resultSet.getInt("id_dents"));
                     dent.setNumero(resultSet.getInt("numero"));
-                    dent.setCout_nettoyage(resultSet.getInt("cout_nettoyage"));
-                    dent.setCout_reparation(resultSet.getInt("cout_reparation"));
-                    dent.setCout_enlevement(resultSet.getInt("cout_enlevement"));
-                    dent.setCout_remplacement(resultSet.getInt("cout_remplacement"));
+                    dent.setCout_nettoyage(resultSet.getDouble("cout_nettoyage"));
+                    dent.setCout_reparation(resultSet.getDouble("cout_reparation"));
+                    dent.setCout_enlevement(resultSet.getDouble("cout_enlevement"));
+                    dent.setCout_remplacement(resultSet.getDouble("cout_remplacement"));
                     dent.setDate_rdv(resultSet.getTimestamp("date_rdv"));
                     dent.setId_situation(resultSet.getInt("id_situation"));
                     dent.setId_etat(resultSet.getInt("id_etat"));
@@ -289,12 +289,11 @@ public class Prioriter {
         return cout;
     }
     
-    public static void etablissementPrioriter(String option,double argent,int idclient) throws Exception{
+    public static void etablissementPrioriter(String option,double argent,int idclient,Timestamp date_now) throws Exception{
         List<Prioriter> listprioriter = Prioriter.getPriorite(option, idclient);
         Operation operation = new Operation();
         Connection connection = PGSQLConnection.getConnection();
         double cout_total = 0;
-        Timestamp date_now = Timestamp.valueOf(LocalDateTime.now());
         for (int i = 0; i < listprioriter.size() ; i++) {
             double cout = getCoutOperationEtat(listprioriter.get(i).getId_etat(),listprioriter.get(i).getNumero());
             double reste_argent = argent - cout_total;

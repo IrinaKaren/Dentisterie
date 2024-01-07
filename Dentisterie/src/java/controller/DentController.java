@@ -2,6 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,13 +25,17 @@ public class DentController extends HttpServlet {
             int idclient = Integer.parseInt(request.getParameter("idclient"));
             double argent = Double.parseDouble(request.getParameter("argent"));
         try {
+            Timestamp date_now = Timestamp.valueOf(LocalDateTime.now());
             String[] new_situation = Dents.getNewSituation(idclient, dents);
             if(new_situation!=null){
                 Dents.newSituation(idclient,new_situation);
             } 
-            Prioriter.etablissementPrioriter(priorite, argent, idclient);
+            Prioriter.etablissementPrioriter(priorite, argent, idclient, date_now);
             response.getWriter().println(argent);
-            request.setAttribute("listdents",Operation.getLastOperation(idclient));
+            request.setAttribute("listdents",Operation.getLastOperation(idclient,date_now));
+            request.setAttribute("argent",argent);
+            request.setAttribute("reste",(argent-Operation.getCoutTotal(idclient,date_now)));
+            request.setAttribute("cout_total",Operation.getCoutTotal(idclient,date_now));
             RequestDispatcher dispatcher = request.getRequestDispatcher("list_dents_traiter.jsp");
             dispatcher.forward(request, response);
         } catch (Exception ex) {
