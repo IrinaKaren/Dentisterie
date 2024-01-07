@@ -90,8 +90,10 @@
         <div id="added-inputs-container" class="added-inputs">
             <input type="number" name="numero_dent" placeholder="Numéro dent" required>
             <select id="type" name="type">
+                <option value="nettoyage">Nettoayge</option>
+                <option value="reparation">Reparation</option>
+                <option value="enlevement">Enlevement</option>
                 <option value="remplacement">Remplacement</option>
-                <option value="traitement">Traitement</option>
             </select>
         </div>
 

@@ -4,6 +4,8 @@ import dbaccess.PGSQLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Client {
     private int id;
@@ -51,6 +53,22 @@ public class Client {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public static List<Client> getAll() throws Exception{
+        List<Client> listss = new ArrayList<>();
+        Connection connection = PGSQLConnection.getConnection();
+        String sql = "SELECT id , nom FROM client";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Client ss = new Client();
+            ss.setId(resultSet.getInt("id"));
+            ss.setNom(resultSet.getString("nom"));
+            listss.add(ss);
+        }
+        connection.close();
+        return listss;
     }
     
     public static int getIdMax() throws Exception{

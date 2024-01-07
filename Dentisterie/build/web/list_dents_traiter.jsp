@@ -1,8 +1,8 @@
-<%@page import="model.Prioriter"%>
+<%@page import="model.Operation"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-        List<Prioriter> listdents = (List<Prioriter>)request.getAttribute("listdents");
+        List<Operation> listdents = (List<Operation>)request.getAttribute("listdents");
 %>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -78,7 +78,9 @@
             <thead>
                 <tr>
                     <th>Dents</th>
+                    <th>Date</th>
                     <th>Numéro</th>
+                    <th>Etat</th>
                     <th>Type</th>
                     <th>Cout</th>
                 </tr>
@@ -87,7 +89,9 @@
                 <% for (int i = 0; i < listdents.size(); i++) { %>
                     <tr>
                         <td></td>
-                        <td><%=listdents.get(i).getNumero()%></td>
+                        <td><%=listdents.get(i).getDate_rdv()%></td>
+                        <td><%=listdents.get(i).getNumeroDent()%></td>
+                        <td><%=listdents.get(i).getId_etat()%></td>
                         <td><%=listdents.get(i).getType()%></td>
                         <td><%=listdents.get(i).getCout()%></td>
                     </tr>

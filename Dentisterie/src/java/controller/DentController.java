@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -9,23 +10,34 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Dents;
+import model.Operation;
 import model.Prioriter;
 
-public class TraitementController extends HttpServlet {
-
+public class DentController extends HttpServlet {
+    //ilay function rehefa valider ka tsy nanova n'inoninona dia le situation farany anaty base no atao an'le etablissement
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String option = request.getParameter("option");
-        String idclient = request.getParameter("idclient");
-        String argent = request.getParameter("argent");
+            String[] dents = request.getParameterValues("dents");
+            String priorite = request.getParameter("priorite");
+            int idclient = Integer.parseInt(request.getParameter("idclient"));
+            double argent = Double.parseDouble(request.getParameter("argent"));
         try {
-//            request.setAttribute("listdents",Prioriter.getDentsTraiter(Double.parseDouble(argent), option, Integer.parseInt(idclient)));
+            String[] new_situation = Dents.getNewSituation(idclient, dents);
+            if(new_situation!=null){
+                Dents.newSituation(idclient,new_situation);
+            } 
+            Prioriter.etablissementPrioriter(priorite, argent, idclient);
+            response.getWriter().println(argent);
+            request.setAttribute("listdents",Operation.getLastOperation(idclient));
             RequestDispatcher dispatcher = request.getRequestDispatcher("list_dents_traiter.jsp");
             dispatcher.forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(TraitementController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            ex.printStackTrace(response.getWriter());
+        }  
+//            for (String dent : new_situation) {
+//                response.getWriter().println(dent);
+//            }     
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

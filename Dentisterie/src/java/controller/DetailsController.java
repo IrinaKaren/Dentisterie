@@ -2,29 +2,25 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Prioriter;
+import model.Client;
 
-public class TraitementController extends HttpServlet {
+public class DetailsController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String option = request.getParameter("option");
-        String idclient = request.getParameter("idclient");
-        String argent = request.getParameter("argent");
         try {
-//            request.setAttribute("listdents",Prioriter.getDentsTraiter(Double.parseDouble(argent), option, Integer.parseInt(idclient)));
-            RequestDispatcher dispatcher = request.getRequestDispatcher("list_dents_traiter.jsp");
+            response.setContentType("text/html;charset=UTF-8");
+            request.setAttribute("listclients",Client.getAll());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("list_client.jsp");
             dispatcher.forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(TraitementController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace(response.getWriter());
         }
     }
 

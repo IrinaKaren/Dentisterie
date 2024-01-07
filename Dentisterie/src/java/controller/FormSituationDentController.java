@@ -29,8 +29,8 @@ public class FormSituationDentController extends HttpServlet {
                 int idClientValue = Integer.parseInt(idclient);
                 int numeroDentValue = Integer.parseInt(numeroDent); 
 //                Dents dent = new Dents(numeroDentValue,idClientValue,degat,type);
-                Dents dent = new Dents(numeroDentValue,idClientValue,null,null);
-                dent.situation();
+//                Dents dent = new Dents(numeroDentValue,idClientValue,null,null);
+//                dent.situation();
 
                 response.getWriter().println("Numero Dent: " + numeroDent);
             } catch (Exception ex) {

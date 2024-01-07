@@ -70,7 +70,7 @@
 </head>
 <body>
 
-    <form action="FormTraitementController">
+    <form action="imgdent.jsp">
         <input type="hidden" name="idclient" value="<%=idclient%>">
         <label for="numeroDents">Entrée votre argent:</label>
         <input type="number" name="argent" required>

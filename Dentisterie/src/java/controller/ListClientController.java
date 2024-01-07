@@ -9,22 +9,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Client;
 import model.Prioriter;
 
-public class TraitementController extends HttpServlet {
+public class ListClientController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String option = request.getParameter("option");
-        String idclient = request.getParameter("idclient");
-        String argent = request.getParameter("argent");
         try {
-//            request.setAttribute("listdents",Prioriter.getDentsTraiter(Double.parseDouble(argent), option, Integer.parseInt(idclient)));
-            RequestDispatcher dispatcher = request.getRequestDispatcher("list_dents_traiter.jsp");
+            response.setContentType("text/html;charset=UTF-8");
+            request.setAttribute("listclients",Client.getAll());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("list_client.jsp");
             dispatcher.forward(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(TraitementController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace(response.getWriter());
         }
     }
 

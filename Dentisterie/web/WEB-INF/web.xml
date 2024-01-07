@@ -24,6 +24,18 @@
         <servlet-name>TraitementController</servlet-name>
         <servlet-class>controller.TraitementController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListClientController</servlet-name>
+        <servlet-class>controller.ListClientController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailsController</servlet-name>
+        <servlet-class>controller.DetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DentController</servlet-name>
+        <servlet-class>controller.DentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ClientController</servlet-name>
         <url-pattern>/ClientController</url-pattern>
@@ -47,6 +59,18 @@
     <servlet-mapping>
         <servlet-name>TraitementController</servlet-name>
         <url-pattern>/TraitementController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListClientController</servlet-name>
+        <url-pattern>/ListClientController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailsController</servlet-name>
+        <url-pattern>/DetailsController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DentController</servlet-name>
+        <url-pattern>/DentController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

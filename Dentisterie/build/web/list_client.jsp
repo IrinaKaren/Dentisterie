@@ -1,8 +1,8 @@
-<%@page import="model.Operation"%>
+<%@page import="model.Client"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-        List<Operation> listdents = (List<Operation>)request.getAttribute("listdents");
+        List<Client> listclients = (List<Client>)request.getAttribute("listclients");
 %>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -53,7 +53,6 @@
             font-family: 'Cursive', sans-serif;
             font-size: 18px;
             color: #333;
-/*            text-align: center;*/
             margin-bottom: 20px;
         }
 
@@ -61,7 +60,7 @@
             display: inline-block;
             padding: 10px 20px;
             text-decoration: none;
-            background-color: chocolate;
+            background-color: #dc3545;
             color: #fff;
             border-radius: 5px;
             transition: background-color 0.3s;
@@ -77,23 +76,15 @@
         <table>
             <thead>
                 <tr>
-                    <th>Dents</th>
-                    <th>Date</th>
-                    <th>Numéro</th>
-                    <th>Etat</th>
-                    <th>Type</th>
-                    <th>Cout</th>
+                    <th>Nom</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <% for (int i = 0; i < listdents.size(); i++) { %>
+                <% for (int i = 0; i < listclients.size(); i++) { %>
                     <tr>
-                        <td></td>
-                        <td><%=listdents.get(i).getDate_rdv()%></td>
-                        <td><%=listdents.get(i).getNumeroDent()%></td>
-                        <td><%=listdents.get(i).getId_etat()%></td>
-                        <td><%=listdents.get(i).getType()%></td>
-                        <td><%=listdents.get(i).getCout()%></td>
+                        <td><%=listclients.get(i).getNom()%></td>
+                        <td><a class="btn" href="DetailsController?id_client=<%=listclients.get(i).getId()%>">Details</a></td>
                     </tr>
                 <% } %>
             </tbody>

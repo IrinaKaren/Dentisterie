@@ -2,6 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -24,19 +26,22 @@ public class FormSoinsController extends HttpServlet {
         double cout_soins = 0;
 
         for (int i = 0; i < numeroDents.length; i++) {
-            try {
-                String numeroDent = numeroDents[i];
-                String type = types[i];
-                listCout[i] = Dents.getCout(types[i], Integer.parseInt(numeroDent)); 
-                cout_soins += Dents.getCout(types[i], Integer.parseInt(numeroDent));
+        try {
+            String numeroDent = numeroDents[i];
+            String type = types[i];
+            listCout[i] = Dents.getCout(type, Integer.parseInt(numeroDent)); 
+            cout_soins += listCout[i];
 
-                int idClientValue = Integer.parseInt(idclient);
-                int numeroDentValue = Integer.parseInt(numeroDent); 
-                Operation o = new Operation(idClientValue, numeroDentValue);
-                o.operations(null, type, idClientValue, numeroDentValue);
+            int idClientValue = Integer.parseInt(idclient);
+            int numeroDentValue = Integer.parseInt(numeroDent); 
+            Timestamp date_rdv = new Timestamp(System.currentTimeMillis());
+            int id_etat = Dents.getIdEtat(type);
 
-                response.getWriter().println("Numero Dent: " + numeroDent + ", Type: " + type);
-            } catch (Exception ex) {
+            Dents dent = new Dents(date_rdv, idClientValue, numeroDentValue, id_etat);
+            dent.update();
+
+            response.getWriter().println("Numero Dent: " + numeroDent + ", Type: " + type);
+        }catch (Exception ex) {
                 ex.printStackTrace(response.getWriter());
             }
         }
